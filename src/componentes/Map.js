@@ -3,6 +3,8 @@ import { Link, Redirect } from "react-router-dom";
 import Cargando from "./Cargando";
 
 const Map = () => {
+  const [ruta, setruta] = useState(window.location.pathname);
+
   const [state, setState] = useState({
     longitude: 0,
     latitude: 0,
@@ -37,7 +39,7 @@ const Map = () => {
           :
           <Redirect
             to={{
-              pathname: "/Tiendas",
+              pathname: ruta+"/Tiendas",
               // state: {
               //   hello: 'world'
               // }

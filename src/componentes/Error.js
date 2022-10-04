@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { useState } from 'react';
+import { Container } from '@mui/material';
 
 const style = {
     position: 'absolute',
@@ -20,27 +22,26 @@ const style = {
     p: 5,
 };
 
-export default function FunBasicModal() {
+export default function Error() {
+    const [marca, setMarca] = useState(window.location.pathname.split("/")[1]);
 
     return (
-        <div>
+        <Container className={`${marca}`}>
             <Modal
                 open={true}
-                onClose={false}
-                aria-labelledby='modal-modal-title'
-                aria-describedby='modal-modal-description'>
-                <Box sx={style}>
-                    <Typography id='modal-modal-title' variant='h6' component='h2'>
+                onClose={false}>
+                <Box className={`color BoxMensajes ${marca}`} sx={style}>
+                    <Typography className='tituloMensaje' variant='h5' component='h2'>
                         ¡Error al leer el código de barras!
                     </Typography>
-                    <Typography id='modal-modal-description'>
+                    <Typography className='textoMensaje' sx={{marginTop:'5px'}}>
                         Intenta nuevamente
                     </Typography>
-                    <Button variant='contained' href='/barcode'>
+                    <Button className='bgColor botonError' sx={{marginTop:'5px',marginBottom:'15px'}} variant='contained' href={`/${marca}/Info/Escaneo`}>
                         Escanear
                     </Button>
                 </Box>
             </Modal>
-        </div>
+        </Container>
     );
 }

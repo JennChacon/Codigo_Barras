@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import Cargando from '../componentes/Cargando';
-import Error from '../componentes/Error';
-import UnionDatos from '../componentes/UnionDatosEan';
+import Cargando from './Cargando';
+import Error from './Error';
+import UnionDatos from './UnionDatosEan';
 import config from '../config.json';
 import { useParams } from 'react-router-dom';
+import { Container } from '@mui/material';
 
 // se escribe solo rcc y crea un react, component, class
 
@@ -75,7 +76,7 @@ const Api = () => {
     }, []);
 
     return (
-        <div>
+        <Container sx={{padding:0}}>
             {
                 err
                     ? <Error />
@@ -83,7 +84,7 @@ const Api = () => {
                         ? <Cargando />
                         : <UnionDatos datosEcommerce={apiEcom} datosApiIn={apiInt} />
             }
-        </div>
+        </Container>
     )
 }
 

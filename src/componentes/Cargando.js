@@ -2,53 +2,54 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Container, Grid, LinearProgress } from '@mui/material';
 import { grey } from '@mui/material/colors';
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 200,
-  height: 100,
-  bgcolor: 'background.paper',
-  border: '2px solid grey',
-  borderRadius: '30px',
-  color: '3d228e',
-  textAlign: 'center',
-  fontWeight: 600,
-  p: 5,
-};
+import { useState } from 'react';
+import logoGef from '../static/img/logoCargaGef.png';
+import logoBabyF from '../static/img/logoCargaBF_1.png';
+import logoPuntoB from '../static/img/logoCargaPB_1.png';
+import logoGalax from '../static/img/logoCargaGlx.png';
+import Header from './Header';
 
 export default function Cargando() {
-  
+  const [marca,setmarca]=useState(window.location.pathname.split("/")[1])
+  const validarMarca = () => {
+    let marca = window.location.pathname.split("/")[1]
+    if (marca === 'BabyF') {
+      return logoBabyF
+    } else {
+      if (marca === 'PuntoB') {
+        return logoPuntoB
+      } else {
+        if (marca === 'Galax') {
+          return logoGalax
+        } else {
+          return logoGef
+        }
+      }
+    }
+  }
+
+  const style = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  };
+
   return (
-    <div>
-      <Modal
-        open={true}
-        aria-labelledby='modal-modal-title'
-        aria-describedby='modal-modal-description'>
-        <Box sx={style}>
-          <Typography id='modal-modal-title' variant='h6' component='h2'>
-            Cargando...
-          </Typography>
-          <Typography id='modal-modal-description'>
-            <Box sx={{
-              display: 'flex',
+    <Container className={`${marca}`} sx={style}>
+      <Grid sx={{
               position: 'absolute',
-              top: '55%',
-              left: '40%',
-              marginTop: '-17px',
-              marginLeft: '-15px',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              textAlign:'center'
             }}>
-              <CircularProgress size={75} sx={{
-                color: grey[800]
-              }} />
-            </Box>
-          </Typography>
-        </Box>
-      </Modal>
-    </div>
+        <Grid >
+          <img width={50} src={`${validarMarca()}`} />
+        </Grid>
+        <CircularProgress className='color' />
+      </Grid>
+    </Container>
   );
 }

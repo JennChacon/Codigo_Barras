@@ -1,95 +1,111 @@
 import * as React from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Avatar, Grid, Stack } from '@mui/material';
+import { Avatar, Divider, Grid, Stack } from '@mui/material';
+import BannerGef from '../static/img/BannerGef.png';
+import BannerBabyF from '../static/img/BannerBabyF.jpg';
+import BannerPuntoB from '../static/img/BannerPuntoB.jpg';
+import BannerGalax from '../static/img/BannerGalax.png';
+import Container from '@mui/material/Container';
 import image from '../static/img/inicio.jpg';
+import Slide from '@mui/material/Slide';
 import { deepPurple } from '@mui/material/colors';
+import Header from '../componentes/Header';
+import { useState } from 'react';
+import Cargando from '../componentes/Cargando';
+import { useEffect } from 'react';
 
 
 const Inicio = () => {
+  const [marca, setMarca] = useState(window.location.pathname.split("/")[1]);
+  const [cargar, setCargar] = useState(true);
+  console.log("ver")
 
-  const styleModal = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 310,
-    height: 200,
-    bgcolor: 'white',
-    border: '2px solid black',
-    borderRadius: '30px',
-    color: 'red',
-    textAlign: 'center',
-    fontWeight: 600,
-    padding: '2px'
-  };
-  const usuario = 'nouser';
+  useEffect(() => {
+    const cargar=()=>{
+      setTimeout(() => {
+        setCargar(false);
+      }, 1000);
+    }
+    
+    cargar();
+  }, []);
+
+  const validarMarcaBanner = () => {
+    if (marca === 'BabyF') {
+      return BannerBabyF
+    } else {
+      if (marca === 'PuntoB') {
+        return BannerPuntoB
+      } else {
+        if (marca === 'Galax') {
+          return BannerGalax
+        } else {
+          return BannerGef
+        }
+      }
+    }
+  }
+
+  const ValidarNombreMarca = () => {
+    if (marca === 'BabyF') {
+      return 'BABY FRESH'
+    } else {
+      if (marca === 'PuntoB') {
+        return 'PUNTO BLANCO'
+      } else {
+        if (marca === 'Galax') {
+          return 'GALAX'
+        } else {
+          return 'GEF'
+        }
+      }
+    }
+  }
+
   const style = {
-    position: 'absolute',
-    top: '60%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 285,
-    bgcolor: 'background.paper',
+    width: '318px',
     border: '2px solid #b1b1b1',
     borderRadius: '20px',
     boxShadow: 24,
-    p: 1,
-  };
+    p: '2% 5% 5% 5%',
+    position: 'absolute',
+    bottom: 0
+  }
 
   return (
-    <div>
-      <Box sx={style}>
-        <Box sx={{ marginTop: '5px' }}>
-          <img style={{ borderRadius: '20px' }} width={283} src={`${image}`} />
-        </Box>
-        <Typography id='modal-modal-title' variant='h6' component='h2'>
-          Escanear código de barras
-        </Typography>
-        <Typography id='modal-modal-description' sx={{ mt: 2, marginBlockEnd: '10px' }}>
-          Escanea el código de barras de la prenda que desees
-        </Typography>
-        <Button sx={{ marginBlockEnd: '3px' }} variant='contained' href='/barcode'>
-          Escanear
-        </Button>
-      </Box>
-      <Modal
-        aria-labelledby='transition-modal-title'
-        aria-describedby='transition-modal-description'
-        open={true}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 1000,
-        }}
-      >
-        <Fade in={true}>
-          <Box sx={styleModal}>
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 6, sm: 2, md: 3 }}>
-              <Grid item xs={12}>
-                <Button variant='text' href='/home'>
-                  Cerrar
+    <Container className={`${marca}`}>
+      {
+        cargar ?
+          <Cargando /> :
+          <Container sx={style}>
+            <Header/>
+            <Box>
+              <img style={{ borderRadius: '20px', marginTop: '5px' }} width={270} src={`${validarMarcaBanner()}`} />
+            </Box>
+            <Typography className='color tipoLetraTitulo' id='modal-modal-title' component='h4' sx={{ marginTop: '5px', textTransform: 'uppercase', fontSize: '20px' }}>
+              {ValidarNombreMarca()} TE DA LA BIENVENIDA
+            </Typography>
+            <Typography className='tipoLetraTexto' id='modal-modal-description' sx={{ marginBlockEnd: '10px', fontSize: '17px' }}>
+              Dejanos conocerte...
+            </Typography>
+            <Grid container spacing={1}>
+              <Grid item xs={6}>
+                <Button size="medium" className='tamanioBoton bgColor tipoLetraTitulo' sx={{ marginBlockEnd: '3px' }} variant='contained' href={`/${marca}/Login`} >
+                  Iniciar Sesión
                 </Button>
               </Grid>
-              <Grid item xs={12}>
-                <Typography id='modal-modal-title' variant='h6' component='h2'>
-                  ¡Recibe un 15% de descuento en tu próxima compra!
-                </Typography>
-              </Grid><br></br>
-              <Grid item xs={12}>
-                <Button variant='contained' href='/Formulario'>
-                  Obtener descuento
+              <Grid item xs={6}>
+                <Button size="medium" className='tamanioBoton bgColor tipoLetraTitulo' sx={{ marginBlockEnd: '3px' }} variant='contained' href={`/${marca}/Registro`}>
+                  Registrarse
                 </Button>
               </Grid>
             </Grid>
-          </Box>
-        </Fade>
-      </Modal>
-    </div>
+          </Container>
+      }
+    </Container>
   );
 }
 export default Inicio

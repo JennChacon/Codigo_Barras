@@ -1,17 +1,48 @@
 .App {
     font-family: sans-serif;
     text-align: center;
-    height: 99vh;
-    width: 99vw;
-    margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #f1f1f1;
+    background-color: #ffffff;
+    opacity: 06;
   }
   
-  .container-barcode {
-    position: relative;
-    border: 2px solid #f56565;
+  .Gef.container-barcode {
+    position: absolute;
+    border: 2px solid #000;
+    border-radius: 14%;
+    border-style: dashed;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    height: 400px;
+  }
+
+  .BabyF.container-barcode {
+    position: absolute;
+    border: 2px solid #88b7ea;
+    border-radius: 14%;
+    border-style: dashed;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    height: 400px;
+  }
+
+  .PuntoB.container-barcode {
+    position: absolute;
+    border: 2px solid #000000;
+    border-radius: 14%;
+    border-style: dashed;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    height: 400px;
+  }
+
+  .Galax.container-barcode {
+    position: absolute;
+    border: 2px solid #ff4d00;
     border-radius: 14%;
     border-style: dashed;
     margin-left: auto;
@@ -21,10 +52,11 @@
   }
 
   .container-princi {
-    height: 530px;
+    height: 410px;
     /*IMPORTANTE*/
     display: flex;
     justify-content: center;
+    align-content: center;
     align-items: center;
   }
   

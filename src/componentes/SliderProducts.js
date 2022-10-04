@@ -1,12 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import { Button, Rating } from '@mui/material';
+import { Button, Container, Rating, Typography } from '@mui/material';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-import CombinaloCon from '../pages/CombinaloCon';
+import CombinaloCon from '../pages/Recomendado';
 
 const SliderProducts = ({ ean }) => {
+    console.log(window.location.pathname)
+    const [marca, setMarca] = useState(window.location.pathname.split("/")[1]);
+    console.log(marca)
     const settings = {
         dots: true,
         infinite: true,
@@ -58,26 +61,31 @@ const SliderProducts = ({ ean }) => {
         },
     ]
     return (
-        <div>
-            <h4> COMPLETA TU LOOK... </h4>
+        <Container className={`${marca}`}>
             <Slider {...settings}>
                 {
                     pro.map(ele => {
-                        return <div key={ele.id}>
+                        return <Container key={ele.id}>
                             <a href={`/Api/${ele.ean}`} style={styleA}>
                                 <img width={130} src={ele.img} />
-                                <h6>{ele.descripcion}<br></br>$ {ele.precio}<br></br>
-                                <Rating name='size-small' defaultValue={ele.calificacion} precision={0.5} sx={{fontSize:'0.9rem'}} readOnly />
-                                </h6>
-                                </a>
-                        </div>
+                                <Typography sx={{ fontSize: '12px' }} className='tipoLetraTexto' variant='h6' component='h2'>
+                                    {ele.descripcion}
+                                </Typography>
+                                <Typography sx={{ fontSize: '12px' }} className='tipoLetraTexto' variant='h6' component='h2'>
+                                    $ {ele.precio}
+                                </Typography>
+                            </a>
+                        </Container>
                     })
                 }
             </Slider>
-            <Button sx={{paddingLeft:'167px'}} variant='text' href={`/CombinaloCon/${ean}`} endIcon={<ArrowRightAltIcon />}>
-                Ver todo
-            </Button>
-        </div>
+            <Container sx={{ paddingTop: '15px' }}>
+                <Button className='tamanioLetraNav botonLink tipoLetraTitulo' href={`/${marca}/Info/Recomendado`} endIcon={<ArrowRightAltIcon />}>
+                    Ver todo
+                </Button>
+            </Container>
+
+        </Container>
     );
 }
 

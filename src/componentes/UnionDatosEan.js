@@ -1,4 +1,4 @@
-import Producto from './Producto';
+import Producto from '../pages/Producto';
 import config from '../config.json'
 import { Redirect } from 'react-router-dom';
 import { color } from '@mui/system';
@@ -52,7 +52,6 @@ const UnionDatosEan=({ datosEcommerce: DatosE, datosApiIn: DatosI }) => {
   }
   const color = ()=>{
     for (const i in DatosE.attributes) {
-      console.log(DatosE.attributes[i]);
       if(DatosE.attributes[i].identifier === 'swatchColor'){
         return DatosE.attributes[i].values[0].identifier;
       }
@@ -62,6 +61,7 @@ const UnionDatosEan=({ datosEcommerce: DatosE, datosApiIn: DatosI }) => {
     return `https://www.gef.co/dx/api/dam/custom/crystalco_cat_as/gef/es-co/imagenes/swatches/swatches_tallas/negros/adultos/adultos_${t}.png`;
 
   }
+
   const ImgColor = (c)=>{
     console.log(c);
     var co = c.replace(" ","-");
@@ -69,16 +69,18 @@ const UnionDatosEan=({ datosEcommerce: DatosE, datosApiIn: DatosI }) => {
     return `https://www.gef.co/dx/api/dam/custom/crystalco_cat_as/2020/gef/es-co/imagenes/swatches/swatches_genericos/${colo}.png`;
 
   }
+
+  console.log(DatosE);
+  console.log(DatosE.attributes[8].values[0].value);
 //'ImgColor':concatenar(DatosE.storeID,DatosE.attributes[1].values[0].image1path),
   const datos = {
     'Nombre' : DatosE.name,
-    'Precio' : DatosI.Precio?double(DatosI.Precio):'',
-    'DescripcionCorta':DatosI.NombreArticulo,
+    'Precio' : DatosE.price[1].value?double(DatosE.price[1].value):'',
     'Descripcion' : DatosE.longDescription?reemplazar(DatosE.longDescription):'',
     'Imagen' : concatenar(DatosE.storeID,DatosE.thumbnail),
-    'Talla':DatosI.Talla?'Talla: '+DatosI.Talla:'',
-    'ImgTalla': talla(DatosI.Talla),
-    'Ean': DatosI.EAN,
+    'Talla': DatosE.attributes[8].values[0].value?'Talla: '+DatosE.attributes[8].values[0].value:'',
+    'ImgTalla': talla(DatosE.attributes[8].values[0].value),
+    'Ean': DatosE.partNumber,
     'Tienda': tiendaNombre(DatosE.storeID),
     'Composicion': DatosI.ComposicionEspanol?'Composición: '+DatosI.ComposicionEspanol:'' + DatosI.ComposicionEspanol2?DatosI.ComposicionEspanol2:'',
     'Color': 'Color: ' + color(),
@@ -87,9 +89,7 @@ const UnionDatosEan=({ datosEcommerce: DatosE, datosApiIn: DatosI }) => {
   };
 
   return (
-    <div>
       <Producto datos={datos} />
-    </div>
   );
 }
 
